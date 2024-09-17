@@ -14,8 +14,8 @@ export const databaseProviders = [
                 host: 'localhost',            // Dirección del host de la base de datos
                 port: 3306,                   // Puerto en el que se ejecuta la base de datos
                 username: 'root',             // Nombre de usuario para acceder a la base de datos
-                password: 'root',             // Contraseña para acceder a la base de datos
-                database: 'typeorm_tuto',     // Nombre de la base de datos a la que se conectará
+                password: '1234',             // Contraseña para acceder a la base de datos
+                database: 'typeorm_marce',     // Nombre de la base de datos a la que se conectará
                 entities: [
                     __dirname + '/../**/*.entity{.ts,.js}', // Ruta donde se encuentran las entidades
                 ],
