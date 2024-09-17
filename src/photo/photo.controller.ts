@@ -9,13 +9,15 @@ import {
   Patch,
   Post,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
+import { AuthGuard } from '@/auth/auth.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
 import { PhotoService } from './photo.service';
-import { CreatePhotoDto } from './dto/photo.create.dto';
+import { CreatePhotoDto } from './dto/create.photo.dto';
 import { UpdatePhotoDto } from './dto/update.photo.dto';
 
 @Controller('/photos')
@@ -27,6 +29,7 @@ export class PhotoController {
     return this.photoService.findAll();
   }
 
+  @UseGuards(AuthGuard)
   @Post()
   @UseInterceptors(
     // Utiliza un interceptor de archivos para manejar la subida

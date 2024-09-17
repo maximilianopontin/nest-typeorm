@@ -21,11 +21,11 @@ export class Photo {
   filename: string;
 
   // Define la columna 'views' como un entero
-  @Column('int')
+  @Column('int', { default: 0 })
   views: number;
 
   // Define la columna 'isPublished' como un booleano
-  @Column()
+  @Column({ default: true })
   isPublished: boolean;
 
   //relación muchos a uno: muchas fotos pueden pertenecer a un mismo autor

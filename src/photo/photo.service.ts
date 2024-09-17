@@ -1,7 +1,7 @@
 import { Injectable, Inject, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Photo } from './entities/photo.entity';
-import { CreatePhotoDto } from './dto/photo.create.dto';
+import { CreatePhotoDto } from './dto/create.photo.dto';
 import { UpdatePhotoDto } from './dto/update.photo.dto';
 import { Author } from '@/author/entities/author.entity';
 
