@@ -4,6 +4,7 @@ import { Photo } from './entities/photo.entity';
 import { CreatePhotoDto } from './dto/create.photo.dto';
 import { UpdatePhotoDto } from './dto/update.photo.dto';
 import { Author } from '@/author/entities/author.entity';
+import { VisitService } from '@/visit/visit.service';
 
 @Injectable()
 export class PhotoService {
@@ -12,12 +13,33 @@ export class PhotoService {
     private photoRepository: Repository<Photo>,
     @Inject('AUTHOR_REPOSITORY')
     private authorRepository: Repository<Author>,
+    private visitService: VisitService,
   ) {}
 
   async findAll(): Promise<Photo[]> {
     // return await this.photoRepository.find();
     return await this.photoRepository.find({ relations: ['author'] });
   }
+
+  async getOne(id: number, ip: string): Promise<Photo> {
+    //buscar foto por id
+    const photo = await this.photoRepository.findOne({
+      where: { id },
+      relations: ['author'],
+    });
+    if (!photo) throw new NotFoundException(`Photo with ID ${id} not found`);
+
+    const isVisited = await this.visitService.createVisit(id, ip);
+    if (!isVisited) {
+      const updatedViews = {
+        ...photo,
+        views: photo.views + 1,
+      };
+      await this.photoRepository.update(id, updatedViews);
+    }
+    return photo;
+  }
+
   async createOne(createPhotoDto: CreatePhotoDto): Promise<Photo> {
     //buscar autor por id
     const author = await this.authorRepository.findOneBy({

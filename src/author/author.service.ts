@@ -12,7 +12,7 @@ export class AuthorService {
 
   // Obtener todos los autores
   async findAll(): Promise<Author[]> {
-    return this.authorRepository.find();
+    return this.authorRepository.find(); //how can we skip certain data from the table??? We don't want to retrieve the password
   }
 
   //modificar un autor
