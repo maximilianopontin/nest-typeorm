@@ -1,5 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm';
 import { Author } from '@/author/entities/author.entity';
+import { Visit } from '@/visit/entities/visit.entity';
 
 // El decorador @Entity indica que esta clase representa una entidad en la base de datos
 @Entity('photos')
@@ -32,6 +39,8 @@ export class Photo {
   // y un autor puede tener muchas fotos
   @ManyToOne(() => Author, (author) => author.photos, { eager: true })
   author: Author;
+  @OneToMany(() => Visit, (visit) => visit.photoId)
+  visits: Visit[];
 }
 
 // EXPLICACIÓN:

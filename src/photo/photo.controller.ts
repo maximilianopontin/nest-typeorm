@@ -8,6 +8,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Req,
   UploadedFile,
   UseGuards,
   UseInterceptors,
@@ -19,7 +20,7 @@ import { extname } from 'path';
 import { PhotoService } from './photo.service';
 import { CreatePhotoDto } from './dto/create.photo.dto';
 import { UpdatePhotoDto } from './dto/update.photo.dto';
-
+import { Request } from 'express';
 @Controller('/photos')
 export class PhotoController {
   constructor(private readonly photoService: PhotoService) {}
@@ -27,6 +28,17 @@ export class PhotoController {
   @Get()
   getAll() {
     return this.photoService.findAll();
+  }
+
+  @Get('/:id')
+  getOne(
+    @Param('id', ParseIntPipe)
+    id: number,
+    @Req()
+    request: Request,
+  ) {
+    const ip = request.ip;
+    return this.photoService.getOne(id, ip);
   }
 
   @UseGuards(AuthGuard)
