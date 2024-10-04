@@ -6,11 +6,19 @@ import { AuthorModule } from './author/author.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'node:path';
 import { AuthModule } from './auth/auth.module';
-import { ConfigModule, ConfigService } from '@nestjs/config';
 import { VisitModule } from './visit/visit.module';
+import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
+import { HealthModule } from './health/health.module';
 
 @Module({
   imports: [
+    ThrottlerModule.forRoot([
+      {
+        ttl: 60000,
+        limit: 10,
+      },
+    ]),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'uploads'),
       serveRoot: '/uploads',
@@ -19,8 +27,9 @@ import { VisitModule } from './visit/visit.module';
     AuthorModule,
     AuthModule,
     VisitModule,
+    HealthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, { provide: APP_GUARD, useClass: ThrottlerGuard }],
 })
 export class AppModule {}

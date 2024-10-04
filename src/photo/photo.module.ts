@@ -6,11 +6,20 @@ import { PhotoController } from './photo.controller';
 import { authorProviders } from '@/author/author.providers';
 import { visitProviders } from '@/visit/visit.providers';
 import { VisitService } from '@/visit/visit.service';
+import { ThrottlerModule } from '@nestjs/throttler';
 
 // Define un módulo para gestionar la entidad Photo
 @Module({
   // Importa el DatabaseModule para tener acceso a los proveedores de la base de datos
-  imports: [DatabaseModule],
+  imports: [
+    DatabaseModule,
+    ThrottlerModule.forRoot([
+      {
+        ttl: 6000,
+        limit: 3,
+      },
+    ]),
+  ],
   controllers: [PhotoController],
 
   // Registra los proveedores específicos de Photo y el servicio PhotoService

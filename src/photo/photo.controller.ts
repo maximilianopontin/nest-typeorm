@@ -21,10 +21,12 @@ import { PhotoService } from './photo.service';
 import { CreatePhotoDto } from './dto/create.photo.dto';
 import { UpdatePhotoDto } from './dto/update.photo.dto';
 import { Request } from 'express';
+import { Throttle, ThrottlerGuard } from '@nestjs/throttler';
 @Controller('/photos')
 export class PhotoController {
   constructor(private readonly photoService: PhotoService) {}
 
+  @Throttle({ default: { limit: 3, ttl: 60000 } })
   @Get()
   getAll() {
     return this.photoService.findAll();
