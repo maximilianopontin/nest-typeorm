@@ -11,6 +11,9 @@ import { VisitModule } from './visit/visit.module';
 
 @Module({
   imports: [
+    //name podemos agregarle nombre con la cantidad de peticion que le permito por minuto, esto en caso de que necesitemos distintos limites para las solictudes
+    // ttl Tiempo de vida en segundos para la limitación de solicitudes (60 segundos)
+    // limit Número máximo de solicitudes permitidas por IP en el periodo de tiempo (10 solicitudes)
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'uploads'),
       serveRoot: '/uploads',
