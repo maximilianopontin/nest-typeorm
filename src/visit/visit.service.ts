@@ -11,6 +11,8 @@ export class VisitService {
   constructor(
     @Inject('VISIT_REPOSITORY')
     private readonly visitRepository: Repository<Visit>,
+    //inyectamos el repositorio, le damos el nombre visitrepository, le decimos que es de tipo repositorio de typeorm
+    //el repositorio se resuelve en una entidad de tipo visit
   ) {}
 
   async createVisit(photoId: number, ip: string) {

@@ -41,6 +41,8 @@ export class Photo {
   author: Author;
   @OneToMany(() => Visit, (visit) => visit.photoId)
   visits: Visit[];
+  //El primer argumento es el tipo de la entidad relacionada (Visit).
+//El segundo argumento indica qué propiedad en la entidad Visit mantiene la relación inversa (photo).
 }
 
 // EXPLICACIÓN:
